@@ -1,20 +1,26 @@
-import { StatusBar } from 'expo-status-bar';
-import { NativeBaseProvider, VStack, Text } from "native-base";
+import { NativeBaseProvider, StatusBar } from "native-base";
 import { THEME } from './src/styles/theme'
 import { useFonts, Roboto_400Regular, Roboto_500Medium, Roboto_700Bold } from '@expo-google-fonts/roboto'
 import { Loading } from './src/components/Loading';
+import { AuthContextProvider } from "./src/contexts/AuthContext";
+import Find from "./src/screens/Find";
 import { SignIn } from './src/screens/Signin';
+import New from "./src/screens/New";
+
 export default function App() {
 
   const [fontsLoaded] = useFonts({ Roboto_400Regular, Roboto_500Medium, Roboto_700Bold})
 
   return (
     <NativeBaseProvider theme={THEME}>
-      <VStack flex={1} bgColor="gray.900">
-        {
-          fontsLoaded ? <SignIn /> : <Loading />
-        }
-      </VStack>
+      <AuthContextProvider>
+        <StatusBar
+          barStyle="light-content"
+          backgroundColor="transparent"
+          translucent
+        />
+        { fontsLoaded ? <Find /> : <Loading /> }
+      </AuthContextProvider>
     </NativeBaseProvider>
   );
 }
